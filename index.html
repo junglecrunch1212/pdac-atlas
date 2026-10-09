@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pancreatic Cancer Atlas</title>
+<meta name="description" content="An illustrated field guide to pancreatic ductal adenocarcinoma (PDAC): the healthy pancreas, tumor biology, spread and stage, treatment pathways, monitoring and daily life, with sources one layer away.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#explHeading">Skip to the explanation</a>
+<header class="topnav" id="topnav">
+  <div class="brand"><h1>Pancreatic Cancer Atlas</h1><small>Pancreatic ductal adenocarcinoma (PDAC) — from the organ to the treatment journey</small></div>
+  <nav class="viewtabs" aria-label="Atlas views">
+    <button type="button" data-view="pancreas" aria-selected="true">Pancreas &amp; neighbors</button>
+    <button type="button" data-view="ecosystem">Tumor ecosystem</button>
+    <button type="button" data-view="cells">Cells &amp; genes</button>
+    <button type="button" data-view="spread">Spread &amp; stage</button>
+    <button type="button" data-view="treatment">Treatment &amp; daily life</button>
+    <button type="button" data-view="connections">Connections</button>
+  </nav>
+  <div class="nav-right">
+    <button type="button" class="btn" id="navSearch">Search</button>
+    <button type="button" class="btn" id="libOpen">Research library</button>
+    <button type="button" class="btn" id="glossOpen">Glossary</button>
+    <button type="button" class="btn quiet" id="aboutOpen">About</button>
+  </div>
+</header>
+
+<div class="story-strip" id="storyStrip" data-open="false">
+  <div class="story-drawer" id="storyDrawer">
+    <div class="story-head"><h2>Guided stories</h2><p>Eight questions, each walked through in a few steps across the atlas. Choose one; you can leave at any step and keep exploring where you are.</p></div>
+    <div class="story-cards" id="storyCards"></div>
+  </div>
+  <div class="story-tab-wrap"><button type="button" class="story-tab" id="storyTab" aria-expanded="false" aria-controls="storyDrawer">Guided Story Mode <span class="chev">▼</span></button></div>
+</div>
+
+<main class="shell" id="shell" data-left="true" data-right="true" data-mleft="false" data-mright="false">
+  <aside class="col col-left" aria-label="Topics">
+    <button type="button" class="col-toggle" id="leftToggle" aria-expanded="true" title="Hide topics">◀</button>
+    <button type="button" class="mclose" aria-label="Close topics">✕</button>
+    <div class="side-head">
+      <h2>Topics</h2>
+      <div class="sub" id="topicsCount"></div>
+      <div class="search-wrap" id="searchWrap" style="margin-top:8px"><label for="topicSearch" class="visually-hidden">Search topics</label><input id="topicSearch" type="search" placeholder="Search: Whipple, KRAS, jaundice, clear scan…" autocomplete="off" style="width:100%;max-width:none"><button type="button" class="clear" id="searchClear" aria-label="Clear search">✕</button></div>
+    </div>
+    <div class="filters" id="filterChips" aria-label="Filter by kind"></div>
+    <div class="filters" style="padding-top:0"><button type="button" class="link" id="clearFilters" style="margin-left:0">Clear filters</button></div>
+    <div class="group-controls"><span>Groups:</span><button type="button" id="expandAll">expand all</button><button type="button" id="collapseAll">collapse all</button></div>
+    <div class="topics-list" id="topicsList"></div>
+  </aside>
+
+  <section class="col col-center" aria-label="Illustration">
+    <div class="view-head"><h2 id="viewTitle">Pancreas &amp; neighbors</h2><div class="crumbs" id="crumbs"></div></div>
+    <p class="view-intro" id="viewIntro"></p>
+    <div class="entry-row" id="entryRow">
+      <button type="button" class="btn" data-entry="anatomy|pancreas-overview|pancreas">Start with the anatomy</button>
+      <button type="button" class="btn" data-entry="diagnosis|stage-vs-resectability|spread">Understanding a diagnosis</button>
+      <button type="button" class="btn" data-entry="living|digestion-enzymes|treatment">Daily-life questions</button>
+    </div>
+    <div class="story-bar" id="storyBar" style="display:none"></div>
+    <div class="visual">
+      <div class="zoom"><button type="button" id="zoomIn" aria-label="Zoom in">+</button><button type="button" id="zoomOut" aria-label="Zoom out">−</button><button type="button" id="zoomReset" aria-label="Reset zoom" style="font-size:11px">1:1</button></div>
+      <div class="stage" id="stage"><div id="loading" class="no-results">Loading the atlas…</div></div>
+      <div class="svgtip" id="svgTip" role="status"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <aside class="col col-right" aria-label="Explanation">
+    <button type="button" class="col-toggle" id="rightToggle" aria-expanded="true" title="Hide explanation">▶</button>
+    <button type="button" class="mclose" aria-label="Close explanation">✕</button>
+    <div class="expl" id="expl">
+      <div class="expl-head" id="explHead"></div>
+      <div class="step-card" id="stepCard" style="display:none"></div>
+      <div class="depth-note" id="depthNote" style="display:none"></div>
+      <div class="expl-body" id="explBody"></div>
+    </div>
+  </aside>
+</main>
+<div class="scrim" id="scrim"></div>
+<div class="mobile-bar"><button type="button" class="btn" id="mTopics">Topics</button><button type="button" class="btn" id="mExpl">Explanation</button></div>
+
+<footer class="foot">
+  <span>Pancreatic Cancer Atlas · research run 8 Oct 2026 · US regulatory status unless labeled</span>
+  <button type="button" id="footAbout">About this atlas</button>
+  <button type="button" id="footLib">Research library</button>
+  <button type="button" id="footGloss">Glossary</button>
+  <button type="button" id="footCopy">Copy link to this page</button>
+  <span>For understanding and better conversations with a care team; not a treatment plan or prognosis calculator.</span>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<dialog class="dlg" id="libDlg" aria-labelledby="libTitle">
+  <div class="box">
+    <div class="dlg-head"><h2 id="libTitle">Research library</h2><span class="scope" id="libScope"></span><button type="button" class="close" aria-label="Close">✕</button></div>
+    <div class="tabs" id="libTabs"><button type="button" data-tab="sources" aria-selected="true">Sources</button><button type="button" data-tab="reg">Regulatory &amp; registry checks</button><button type="button" data-tab="about">How the research was done</button></div>
+    <div id="libSourcesPane">
+      <div class="lib-tools"><label class="visually-hidden" for="libQ">Search sources</label><input id="libQ" type="search" placeholder="Search citations, findings, trials, drugs…"><select id="libKind" aria-label="Kind"><option value="">All kinds</option><option value="study">Primary studies (read in full)</option><option value="lead">Primary studies (abstract/registry only)</option><option value="secondary">Guidelines, labels, registries, reviews</option><option value="inference">Inference records</option></select><select id="libEv" aria-label="Evidence type"><option value="">All evidence types</option><option>Established biology</option><option>Human studies</option><option>Experimental findings</option><option>Proposed mechanism</option></select><select id="libDom" aria-label="Domain"></select></div>
+      <div class="lib-count" id="libCount"></div>
+    </div>
+    <div class="dlg-body"><div id="libList"></div><div id="libRegPane" style="display:none"></div><div id="libAboutPane" style="display:none"></div></div>
+  </div>
+</dialog>
+
+<dialog class="dlg" id="glossDlg" aria-labelledby="glossTitle">
+  <div class="box"><div class="dlg-head"><h2 id="glossTitle">Glossary</h2><span class="scope" id="glossCount"></span><button type="button" class="close" aria-label="Close">✕</button></div>
+  <div class="lib-tools"><label class="visually-hidden" for="glossQ">Search glossary</label><input id="glossQ" type="search" placeholder="Search terms…"></div>
+  <div class="dlg-body"><div id="glossList"></div></div></div>
+</dialog>
+
+<dialog class="dlg" id="readDlg" aria-labelledby="readTitle">
+  <div class="box reading"><div class="dlg-head"><h2 id="readTitle"></h2><span class="scope">Wide reading view</span><button type="button" class="close" aria-label="Close">✕</button></div>
+  <div class="dlg-body" id="readBody"></div></div>
+</dialog>
+
+<dialog class="dlg" id="aboutDlg" aria-labelledby="aboutTitle">
+  <div class="box"><div class="dlg-head"><h2 id="aboutTitle">About this atlas</h2><button type="button" class="close" aria-label="Close">✕</button></div>
+  <div class="dlg-body" id="aboutBody"></div></div>
+</dialog>
+
+<script src="illustrations.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
